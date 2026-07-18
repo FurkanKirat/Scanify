@@ -1,0 +1,170 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="using:Grepdesk.UI"
+        x:Class="Grepdesk.UI.MainWindow"
+        Title="FileSearch"
+        Width="800" Height="600"
+        MinWidth="500" MinHeight="300"
+        Background="#1e1e2e">
+
+    <Window.Styles>
+        <Style Selector="TabItem">
+            <Setter Property="Foreground" Value="#cdd6f4"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#313244"/>
+            <Setter Property="Foreground" Value="#cdd6f4"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="10,6"/>
+        </Style>
+        <Style Selector="CheckBox">
+            <Setter Property="Foreground" Value="#a6adc8"/>
+        </Style>
+    </Window.Styles>
+
+    <TabControl Margin="12" Background="Transparent">
+
+        <!-- ===================== TAB 1 : FILE NAME SEARCH ===================== -->
+        <TabItem Header="Dosya Adı Arama">
+            <DockPanel Margin="0,10,0,0">
+                <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,10">
+                    <TextBox x:Name="SearchBox"
+                             Watermark="Search files and folders..."
+                             FontSize="16"
+                             Padding="10,8"
+                             Background="#313244"
+                             Foreground="White"
+                             BorderBrush="#45475a"
+                             CornerRadius="6"/>
+
+                    <DockPanel>
+                        <TextBlock x:Name="StatusText"
+                                   Text="Taramak için bir seçenek belirleyin"
+                                   Foreground="#a6adc8"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                            <Button x:Name="ChooseFolderButton" Content="Klasör Seç..."/>
+                            <Button x:Name="ScanAllButton" Content="Tüm PC'yi Tara"/>
+                            <Button x:Name="ReindexButton" Content="Yeniden Tara" IsEnabled="False"/>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+
+                <ListBox x:Name="ResultsList"
+                         Background="#181825"
+                         BorderBrush="#313244"
+                         BorderThickness="1"
+                         CornerRadius="6"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="ui:ResultItem">
+                            <DockPanel Margin="4,3" ToolTip.Tip="{Binding FullPath}">
+                                <TextBlock DockPanel.Dock="Left"
+                                           Text="{Binding Icon}"
+                                           FontSize="16"
+                                           Margin="0,0,8,0"
+                                           VerticalAlignment="Center"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding FileName}"
+                                               Foreground="#cdd6f4"
+                                               FontSize="13"
+                                               FontWeight="Medium"/>
+                                    <TextBlock Text="{Binding Directory}"
+                                               Foreground="#6c7086"
+                                               FontSize="11"
+                                               TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ===================== TAB 2 : CONTENT SEARCH ===================== -->
+        <TabItem Header="İçerik Arama">
+            <DockPanel Margin="0,10,0,0">
+                <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,10">
+
+                    <DockPanel>
+                        <TextBlock Text="Aranacak klasör:"
+                                   Foreground="#a6adc8"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"
+                                   DockPanel.Dock="Left"/>
+                        <Button x:Name="ContentChooseFolderButton"
+                                Content="Klasör Seç..."
+                                DockPanel.Dock="Right"/>
+                        <TextBlock x:Name="ContentFolderText"
+                                   Text="(seçilmedi)"
+                                   Foreground="#cdd6f4"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"/>
+                    </DockPanel>
+
+                    <TextBox x:Name="ContentSearchBox"
+                             Watermark="Dosya içinde aranacak metin — Enter'a basın..."
+                             FontSize="16"
+                             Padding="10,8"
+                             Background="#313244"
+                             Foreground="White"
+                             BorderBrush="#45475a"
+                             CornerRadius="6"/>
+
+                    <DockPanel>
+                        <TextBlock x:Name="ContentStatusText"
+                                   Text="Önce bir klasör seçin"
+                                   Foreground="#a6adc8"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock DockPanel.Dock="Right"
+                                   Text="Destek: .txt .md .cs .json .html .docx .xlsx .pdf(*) vb."
+                                   Foreground="#6c7086"
+                                   FontSize="11"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                </StackPanel>
+
+                <ListBox x:Name="ContentResultsList"
+                         Background="#181825"
+                         BorderBrush="#313244"
+                         BorderThickness="1"
+                         CornerRadius="6"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="ui:ResultItem">
+                            <DockPanel Margin="4,3" ToolTip.Tip="{Binding FullPath}">
+                                <TextBlock DockPanel.Dock="Left"
+                                           Text="{Binding Icon}"
+                                           FontSize="16"
+                                           Margin="0,0,8,0"
+                                           VerticalAlignment="Center"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding FileName}"
+                                               Foreground="#cdd6f4"
+                                               FontSize="13"
+                                               FontWeight="Medium"/>
+                                    <TextBlock Text="{Binding Directory}"
+                                               Foreground="#6c7086"
+                                               FontSize="11"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Snippet}"
+                                               Foreground="#89b4fa"
+                                               FontSize="11"
+                                               FontStyle="Italic"
+                                               TextWrapping="Wrap"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
+</Window>

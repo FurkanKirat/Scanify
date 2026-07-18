@@ -70,7 +70,7 @@ support straightforward to add later.
 git clone https://github.com/<your-username>/seeker.git
 cd seeker
 dotnet build
-dotnet run --project FileSearch.UI
+dotnet run --project Grepdesk.UI
 ```
 
 ## License
